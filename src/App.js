@@ -4,17 +4,16 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Header from './components/Header';
+import BookSearchWeb from './components/BookSearchWeb';
 
 class App extends Component {
-  constructor(props) {
-    super();
-  }
   render() {
     return (
       <div className="container">
         <Header
           title="app_name"
         />
+        <BookSearchWeb />
       </div>
     );
   }
