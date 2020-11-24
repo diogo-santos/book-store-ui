@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Header from './components/Header';
 import BookSearchWeb from './components/BookSearchWeb';
+import BookPagination from './components/BookPagination';
 
 class App extends Component {
   render() {
@@ -14,6 +15,7 @@ class App extends Component {
           title="app_name"
         />
         <BookSearchWeb />
+        <BookPagination />
       </div>
     );
   }
