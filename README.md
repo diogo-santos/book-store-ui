@@ -17,3 +17,11 @@ echo "REACT_APP_API_URL=http://localhost:8080/books" >> .env.local
 npm install
 npm start
 ```
+
+#### What I have developed
+- [ ] Search books from Web API
+- [ ] Save searched book into books-api
+- [ ] Pagination component
+- [ ] View Book Modal
+- [ ] Delete Book
+- [ ] Testing components with react test library
