@@ -1,11 +1,14 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
+import { mockTranslation } from './utils/helper';
+jest.mock('react-i18next', () => (mockTranslation));
+
 import Modal from "../components/Modal";
 import BookView from "../components/BookView";
 
 test("renders post data", () => {
-  const mockBook = { 
+  const mockBook = {
     id: 1,
     title: "Mock title",
     author: "Mock author",
@@ -15,16 +18,16 @@ test("renders post data", () => {
   };
 
   const { getByText, getByTestId } = render
-    (<Modal 
-      id="Mock id" 
-      title="Mock title" 
-      body={<BookView book={mockBook}/>} 
+    (<Modal
+      id="Mock id"
+      title="Mock title"
+      body={<BookView book={mockBook} />}
     />);
   const modal = getByTestId(/Mock id/i);
   const title = getByText(/Mock title/);
   const author = getByText(/Mock author/);
   const category = getByText(/Mock category/);
-  const publishedDate = getByText("20/02/2020");
+  const publishedDate = getByText("2020");
 
   expect(modal).toBeInTheDocument();
   expect(title).toBeInTheDocument();
