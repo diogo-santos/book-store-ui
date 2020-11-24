@@ -1,6 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
+import { mockTranslation } from './utils/helper';
+jest.mock('react-i18next', () => (mockTranslation));
+
 import BookList from "../components/BookList";
 
 test("renders post data", () => {
@@ -17,12 +20,12 @@ test("renders post data", () => {
   };
 
   const { getByText, getByTestId } = render(
-      <BookList
-        books={mockBooks.books}
-        onView={()=> jest.mock()}
-        onDelete={()=> jest.mock()}
-        />
-    );
+    <BookList
+      books={mockBooks.books}
+      onView={() => jest.mock()}
+      onDelete={() => jest.mock()}
+    />
+  );
   const title = getByText(/Mock title/);
   const author = getByText(/Mock author/);
   const category = getByText(/Mock category/);
@@ -32,8 +35,8 @@ test("renders post data", () => {
   expect(title).toBeInTheDocument();
   expect(author).toBeInTheDocument();
   expect(category).toBeInTheDocument();
-  expect(viewBook.textContent).toBe("View Book");
-  expect(deleteBook.textContent).toBe("Delete Book");
+  expect(viewBook.textContent).toBe("book_view");
+  expect(deleteBook.textContent).toBe("book_delete");
   expect(document.querySelector("img").getAttribute("src")).toBe("Mock url image")
 
 });

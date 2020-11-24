@@ -1,7 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import Header from "../components/Header";
+import { mockTranslation } from './utils/helper';
+jest.mock('react-i18next', () => (mockTranslation));
+
+import Header from '../components/Header';
 
 test("renders title component", () => {
 
