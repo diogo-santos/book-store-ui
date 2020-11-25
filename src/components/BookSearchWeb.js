@@ -13,20 +13,33 @@ class BookSearchWeb extends Component {
       books: [],
       query: '',
       alertMessage: '',
-      storedBooks: []
+      alertType: 'warning'
     };
 
     this.handleCloseAlert = this.handleCloseAlert.bind(this);
-    this.handleSaveBook = this.handleSaveBook.bind(this);
     this.handleOnInputChange = this.handleOnInputChange.bind(this);
     this.handleOnInputKeyDown = this.handleOnInputKeyDown.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleSaveBook = this.handleSaveBook.bind(this);
+  }
+  setSuccessAlert = (message) => {
+    this.setState({
+      alertMessage: message,
+      alertType: 'success'
+    });
+  }
+  setWarningAlert = (message) => {
+    this.setState({
+      alertMessage: message,
+      alertType: 'warning'
+    });
   }
   handleCloseAlert = () => {
-    this.setState({ alertMessage: "" });
+    this.setState({ alertMessage: '' });
   }
   fetchBooksFromWeb(query) {
     if (query) {
+      this.handleCloseAlert();
       getBooksFromWeb(query)
         .then((response) => response.json())
         .then((data) => {
@@ -37,8 +50,8 @@ class BookSearchWeb extends Component {
                 ? book.volumeInfo.imageLinks.thumbnail : '';
               return {
                 title: book.volumeInfo.title || "",
-                author: book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Unknown',
-                category: book.volumeInfo.categories ? book.volumeInfo.categories.join(', ') : 'Unknown',
+                author: book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : '',
+                category: book.volumeInfo.categories ? book.volumeInfo.categories.join(', ') : '',
                 publishedDate: book.volumeInfo.publishedDate,
                 image: image.replace('http://', 'https://')
               }
@@ -47,26 +60,21 @@ class BookSearchWeb extends Component {
           this.setState({ books });
         })
         .catch((e) => {
-          this.setState({
-            alertMessage: 'book_search_error'
-          });
+          this.setWarningAlert('book_search_error');
         });
     }
   }
-  handleSaveBook = (book, index) => {
+  handleSaveBook = (book) => {
     if (book) {
+      this.handleCloseAlert();
       createBook(book)
         .then((response) => {
           if (response.ok) {
-            let storedBooks = this.state.storedBooks;
-            storedBooks.push(index);
-            this.setState({ storedBooks });
+            this.setSuccessAlert('book_save_sucess');
           }
         })
         .catch(() => {
-          this.setState({
-            alertMessage: 'book_save_error'
-          });
+          this.setWarningAlert('book_save_error');
         });
     }
   }
@@ -86,7 +94,7 @@ class BookSearchWeb extends Component {
     return (
       <div>
         <Alert
-          type="warning"
+          type={this.state.alertType}
           message={this.state.alertMessage}
           onClose={this.handleCloseAlert}
         />
@@ -99,7 +107,6 @@ class BookSearchWeb extends Component {
         <BookList
           books={this.state.books}
           onSave={this.handleSaveBook}
-          storedBooks={this.state.storedBooks}
         />
       </div>
     );
