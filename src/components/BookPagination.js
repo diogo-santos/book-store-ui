@@ -4,12 +4,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { getBooks, deleteBook } from "../services/BookService";
 
-import BookList from './BookList';
-import Pagination from 'react-js-pagination';
+import BookSearchWeb from './BookSearchWeb';
+import Alert from './Alert';
 import DropDown from './DropDown';
+import BookList from './BookList';
 import Modal from './Modal';
 import BookView from './BookView';
-import Alert from './Alert';
+import Pagination from 'react-js-pagination';
 
 const SORT_OPTIONS = [
   { text: 'book_title', value: "title" },
@@ -24,7 +25,7 @@ const PAGE_SIZE_OPTIONS = [
   { text: '50 per page', value: 50 }
 ];
 
-class BookSearch extends Component {
+class BookPagination extends Component {
   constructor(props) {
     super();
     this.state = {
@@ -36,6 +37,7 @@ class BookSearch extends Component {
       bookView: {},
       alertMessage: ''
     };
+    this.fetchBooks = this.fetchBooks.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleSortChange = this.handleSortChange.bind(this);
     this.handlePageSizeChange = this.handlePageSizeChange.bind(this);
@@ -115,6 +117,7 @@ class BookSearch extends Component {
   render() {
     return (
       <div>
+        <BookSearchWeb fetchBooks={this.fetchBooks} />
         <Alert
           type="warning"
           message={this.state.alertMessage}
@@ -165,4 +168,4 @@ class BookSearch extends Component {
   }
 }
 
-export default BookSearch;
+export default BookPagination;
