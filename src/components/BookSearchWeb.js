@@ -70,6 +70,8 @@ class BookSearchWeb extends Component {
       createBook(book)
         .then((response) => {
           if (response.ok) {
+            this.setState({ books: [] });
+            this.props.fetchBooks();
             this.setSuccessAlert('book_save_sucess');
           }
         })
