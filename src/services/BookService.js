@@ -3,14 +3,14 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 export async function getBooksFromWeb(queryParam) {
   const url = `${GOOGLE_API_URL}${queryParam}`;
-  const response = await fetch(url);
+  const response = await fetch(url, { method: 'GET' });
 
   return handleErrors(response);
 }
 
 export async function getBooks(pageNumber, pageSize, sortBy) {
   const url = `${API_URL}?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`;
-  const response = await fetch(url);
+  const response = await fetch(url, { method: 'GET' });
 
   return handleErrors(response);
 }
