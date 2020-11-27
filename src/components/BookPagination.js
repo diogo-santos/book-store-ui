@@ -117,21 +117,26 @@ class BookPagination extends Component {
   render() {
     return (
       <div>
-        <BookSearchWeb fetchBooks={this.fetchBooks} />
+        <BookSearchWeb
+          fetchBooks={this.fetchBooks}
+        />
+        <div className="d-flex p-2 mb-2 bg-light mt-2">
+          <span> {`Your saved books (${this.state.totalElements})`} </span>
+        </div>
         <Alert
           type="warning"
           message={this.state.alertMessage}
           onClose={this.handleCloseAlert}
         />
         {this.state.books.length > 0 && (
-          <div className="d-flex justify-content-between p-2 mb-2 bg-light">
-            <span className="mt-2"> Your saved books </span>
-            <DropDown
-              label="Sort By"
-              options={SORT_OPTIONS}
-              onChange={this.handleSortChange}
-            />
-          </div>
+          <PaginationBar
+            handlePageSizeChange={this.handlePageSizeChange}
+            pageNumber={this.state.pageNumber}
+            pageSize={this.state.pageSize}
+            totalElements={this.state.totalElements}
+            handlePageChange={this.handlePageChange}
+            handleSortChange={this.handleSortChange}
+          />
         )}
         <Modal
           id="viewBookModal"
@@ -145,27 +150,44 @@ class BookPagination extends Component {
           onDelete={this.handleDeleteBook}
         />
         {this.state.books.length > 0 && (
-          <div className="d-flex justify-content-center mb-2">
-            <DropDown
-              label="Page size"
-              options={PAGE_SIZE_OPTIONS}
-              onChange={this.handlePageSizeChange}
-              space="mr-2"
-            />
-            <Pagination
-              activePage={this.state.pageNumber}
-              itemsCountPerPage={this.state.pageSize}
-              totalItemsCount={this.state.totalElements}
-              pageRangeDisplayed={4}
-              itemClass="page-item"
-              linkClass="page-link"
-              onChange={this.handlePageChange}
-            />
-          </div>
+          <PaginationBar
+            handlePageSizeChange={this.handlePageSizeChange}
+            pageNumber={this.state.pageNumber}
+            pageSize={this.state.pageSize}
+            totalElements={this.state.totalElements}
+            handlePageChange={this.handlePageChange}
+            handleSortChange={this.handleSortChange}
+          />
         )}
       </div>
     );
   }
 }
+
+const PaginationBar = props =>
+  <div className="d-flex justify-content-center mb-2">
+    <DropDown
+      label="Page size"
+      options={PAGE_SIZE_OPTIONS}
+      onChange={props.handlePageSizeChange}
+      space="mr-2"
+    />
+    <Pagination
+      activePage={props.pageNumber}
+      itemsCountPerPage={props.pageSize}
+      totalItemsCount={props.totalElements}
+      pageRangeDisplayed={4}
+      itemClass="page-item"
+      linkClass="page-link"
+      onChange={props.handlePageChange}
+    />
+    <DropDown
+      label="Sort By"
+      options={SORT_OPTIONS}
+      onChange={props.handleSortChange}
+      space="ml-2"
+    />
+  </div>
+  ;
 
 export default BookPagination;
