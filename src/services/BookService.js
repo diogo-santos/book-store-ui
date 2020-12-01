@@ -1,5 +1,6 @@
 const GOOGLE_API_URL = process.env.REACT_APP_GOOGLE_BOOKS_API_URL;
-const API_URL = process.env.REACT_APP_API_URL;
+const READ_API_URL = process.env.REACT_APP_READ_API_URL;
+const WRITE_API_URL = process.env.REACT_APP_WRITE_API_URL;
 
 export async function getBooksFromWeb(queryParam) {
   const url = `${GOOGLE_API_URL}${queryParam}`;
@@ -9,14 +10,14 @@ export async function getBooksFromWeb(queryParam) {
 }
 
 export async function getBooks(pageNumber, pageSize, sortBy) {
-  const url = `${API_URL}?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`;
+  const url = `${READ_API_URL}?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`;
   const response = await fetch(url, { method: 'GET' });
 
   return handleErrors(response);
 }
 
 export async function createBook(book) {
-  const response = await fetch(API_URL, {
+  const response = await fetch(WRITE_API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(book)
@@ -26,7 +27,7 @@ export async function createBook(book) {
 }
 
 export async function deleteBook(id) {
-  const url = `${API_URL}/${id}`;
+  const url = `${WRITE_API_URL}/${id}`;
   const response = await fetch(url, { method: 'DELETE' });
 
   return handleErrors(response);

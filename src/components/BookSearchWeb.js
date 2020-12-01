@@ -59,7 +59,7 @@ class BookSearchWeb extends Component {
 
           this.setState({ books });
         })
-        .catch((e) => {
+        .catch(() => {
           this.setWarningAlert('book_search_error');
         });
     }
