@@ -22,8 +22,7 @@ npm start
 
 #### What I have developed
 - [ ] Search books from Google Web API
-- [ ] Save searched book throught books-write-api
+- [ ] Save book
 - [ ] Pagination component
-- [ ] View Book Modal
 - [ ] Delete Book
 - [ ] Testing components with react test library
